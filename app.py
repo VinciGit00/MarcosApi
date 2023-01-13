@@ -7,4 +7,4 @@ def hello_world():
     data = {'statuscode':200,
             'message':'my name is Marco'
             }
-    return 'My My name is Marcoo!'
+    return jsonify(data)
