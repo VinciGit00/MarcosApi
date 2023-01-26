@@ -6,12 +6,12 @@ app = Flask(__name__)
 
 array = [1, 2, 3]
 
-person = [{"name" : "Marco", "surname" : "Vinciguerra"}, {"name" : "Gabriele", "surname" : "Marchesi"}]
+person = [{"name": "Marco", "surname": "Vinciguerra"}, {"name": "Gabriele", "surname": "Marchesi"}]
 
 
 @app.route('/')
 def hello_world():
-    data = OrderedDict([('code',200), ('message','my name is Marco')])
+    data = OrderedDict([('code', 200), ('message','my name is Marco')])
     return jsonify(data)
 
 
@@ -24,6 +24,16 @@ def info():
 def getArray():
     data = {"code": 200, "message": array}
     return jsonify(data)
+
+@app.route('/ProvaIf')
+def provaIf():
+    elem = request.json.get('value')
+    if(elem > 0):
+        data = {"code": 200, "message": "Valore maggiore di 200"}
+    else:
+        data = {"code": 200, "message": "Valore minore di 200"}
+    return jsonify(data)
+
 
 @app.route('/add', methods=['POST'])
 def add_element():
