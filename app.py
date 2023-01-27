@@ -1,6 +1,7 @@
 from flask import Flask
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, send_from_directory
 from collections import OrderedDict
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
@@ -8,6 +9,23 @@ array = [1, 2, 3]
 
 person = [{"name": "Marco", "surname": "Vinciguerra"}, {"name": "Gabriele", "surname": "Marchesi"}]
 
+    # URL for exposing Swagger UI (without trailing '/')
+SWAGGER_URL = '/swagger'
+# Our API url (can of course be a local resource)
+API_URL = '/static/swagger.json'
+swaggerui_blueprint = get_swaggerui_blueprint(
+     # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    SWAGGER_URL,
+    API_URL,
+    config={ 
+         'app_name': "Seans-Python-Flask-REST-Boilerplate"
+    }
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
+        
 
 @app.route('/')
 def hello_world():
